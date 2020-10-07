@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Counter from "./Counter";
+import { createStore } from 'redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const initialState = {
+  name: 'TOM',
+  count: 10
 }
+
+function reducer(state, action) {
+  console.log('Reducer', state, action);
+  switch (action.type) {
+    case "DECREASE":
+      return {...state, count: state.count - 1};
+    case "INCREASE":
+      return {...state, count: state.count + 1};
+    case "RESET":
+      return {...state, count: 0};
+    default:
+      return state;
+  }
+}
+
+const store = createStore(reducer, initialState);
+
+store.dispatch({type: "DECREASE"});
+store.dispatch({type: "DECREASE"});
+store.dispatch({type: "DECREASE"});
+
+console.log(store.getState());
+
+const App = () => {
+
+  
+
+  return(
+    <Counter state={store.getState()} />
+  )
+};
 
 export default App;
